@@ -7,8 +7,11 @@
   </form>
   <h2>{{ newTodo }}</h2>
   <ul>
-    <li v-for="todo in todos" :key="todo.id" class="cursor">
-      <h3 :class="{underLine: todo.done}" @click="toggleDone(todo)">{{ todo.content }}</h3>
+    <li v-for="(todo, index) in todos" :key="todo.id" class="cursor">
+      <h3 :class="{ underLine: todo.done }" @click="toggleDone(todo)">
+        {{ todo.content }}
+      </h3>
+      <button @click="removeTodo(index)">Remove Todo</button>
     </li>
   </ul>
 </template>
@@ -29,14 +32,18 @@ export default {
       });
       newTodo.value = "";
     }
-    function toggleDone(todo){
-      todo.done =!todo.done;
+    function toggleDone(todo) {
+      todo.done = !todo.done;
+    }
+    function removeTodo(index) {
+      todos.value.splice(index, 1);
     }
     return {
       toggleDone,
       todos,
       newTodo,
       addNewTodo,
+      removeTodo,
     };
   },
 };
@@ -51,10 +58,10 @@ body {
   width: 80%;
   margin: 0 auto;
 }
-.cursor{
+.cursor {
   cursor: pointer;
 }
-.underLine{
+.underLine {
   text-decoration: line-through;
 }
 </style>
