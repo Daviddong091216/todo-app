@@ -6,6 +6,8 @@
     <button>Add New Todo</button>
   </form>
   <h2>{{ newTodo }}</h2>
+  <button @click="markAllDone">Mark All Done</button>
+  <button @click="removeAll">Remove All</button>
   <ul>
     <li v-for="(todo, index) in todos" :key="todo.id" class="cursor">
       <h3 :class="{ underLine: todo.done }" @click="toggleDone(todo)">
@@ -38,12 +40,20 @@ export default {
     function removeTodo(index) {
       todos.value.splice(index, 1);
     }
+    function markAllDone() {
+      todos.value.forEach((todo) => (todo.done = true));
+    }
+    function removeAll() {
+      todos.value = [];
+    }
     return {
       toggleDone,
       todos,
       newTodo,
       addNewTodo,
       removeTodo,
+      markAllDone,
+      removeAll,
     };
   },
 };
